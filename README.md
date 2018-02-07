@@ -1,4 +1,7 @@
 # Cobot
-hello toi
-hello toi
-TROOLLLL
+
+A faire:
+- Calibrage en 3 points
+- Redéfinir la position de la caméra
+- Faire une étude dynamique
+- Finir support caméra
