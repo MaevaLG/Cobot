@@ -95,7 +95,7 @@ int init_espace_travaille()
     	
     	/* ici on va recuperer la distance en norme entre les 2 points et diviser la distance reel en mm par cette norme
     	on obtient ainsi une "echelle" donnant la relation entre les pixels et les mm */
-    	echelle=distance_reel/(float)sqrt((circles[0][0]-circles[1][0])*(circles[0][0]-circles[1][0])+ (circles[0][1]-circles[1][1])*(circles[0][1]-circles[1][1]));
+    	echelle=distance_reel/(float)sqrt((circles[0][0]-circles[1][0])*(circles[0][0]-circles[1][0])+ (circles[0][1]-circles[1][1])*(circles[0][1]-circles[1][1])); //(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)
     	printf(" la mise à l'echelle est de : %f\n",echelle);
     	
     	/* on stock les images afin de permettre le debeug */
