@@ -40,7 +40,7 @@ const int taille_tram_envoie=64;
 
 int socket_desc; //socket pour l'envoie
 
-string programme[100]; // tableau contenant le nom des programmes disponnible
+string programme[100]; // tableau contenant le nom des programmes disponible
 byte OutBuffer[taille_tram_envoie]; //tableau de trame a envoyer pour le pilotage moteur
 byte server_reply[3000];  //tableau pour stocker la réponse de la rasp
 
