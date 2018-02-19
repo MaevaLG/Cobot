@@ -93,7 +93,12 @@ int init_espace_travaille()
    	/* ici on va recuperer la distance en norme entre les 2 points et diviser la distance reel en mm par cette norme
    	on obtient ainsi une "echelle" donnant la relation entre les pixels et les mm */
    	echelle=distance_reel/(float)sqrt((circles[0][0]-circles[1][0])*(circles[0][0]-circles[1][0])+(circles[0][1]-circles[1][1])*(circles[0][1]-circles[1][1])); //(x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)
-    printf("La mise a l'echelle est de : %f\n",echelle);
+    echelle1=distance_reel/(float)sqrt((circles[0][0]-circles[2][0])*(circles[0][0]-circles[2][0])+(circles[0][1]-circles[2][1])*(circles[0][1]-circles[2][1]));
+	echelle2=distance_reel/(float)sqrt((circles[2][0]-circles[1][0])*(circles[2][0]-circles[1][0])+(circles[2][1]-circles[1][1])*(circles[2][1]-circles[1][1]));
+	maxech=max(echelle,echelle1,echelle2);
+	minech=min(echelle,echelle1,echelle2);
+	echtot=echelle+echelle1+echelle2-minech-maxech;
+	printf("La mise a l'echelle est de : %f\n",echtot);
     	
     /* on stock les images afin de permettre le debeug */
    	imwrite("calibrage/calibrage.png", calibrage);
