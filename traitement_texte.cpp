@@ -13,10 +13,8 @@
 #include <time.h>
 #include <curses.h> // entrée clavier
 
-
 using namespace std;
 using namespace cv;
-
 
 extern bool arret_demande;
 extern double vitesse,acceleration,deceleration;
@@ -34,42 +32,45 @@ int emplacement_piece_z;
 /************************************************************************************/
 namespace fnv
 {
-  constexpr uint64_t _(uint64_t h, const char* s)
-  {
-    return (*s == 0) ? h :
-      _((h * 1099511628211ull) ^ static_cast<uint64_t>(*s), s+1);
-  }
+	constexpr uint64_t _(uint64_t h, const char* s)
+	{
+    	return (*s == 0) ? h :
+     	_((h * 1099511628211ull) ^ static_cast<uint64_t>(*s), s+1);
+  	}
 }
 
-constexpr uint64_t _(const char* s){return fnv::_(14695981039346656037ull, s);}
+constexpr uint64_t _(const char* s)
+{
+	return fnv::_(14695981039346656037ull, s);
+}
 
-uint64_t _(const std::string& s){return fnv::_(14695981039346656037ull, s.data());}
+uint64_t _(const std::string& s)
+{
+	return fnv::_(14695981039346656037ull, s.data());
+}
 
 /***********************************************************************************/
 
-
-
-
 int affichage_contenu_programme()
 {
-        ifstream fichier("contenu_programme.txt", ios::in);  // on ouvre le fichier en lecture
+    ifstream fichier("contenu_programme.txt", ios::in);  // on ouvre le fichier en lecture
  	
  	printf("\ncontenu du programme choisi : \n");
-        if(fichier)  // si l'ouverture a fonctionné
-        {
+    if(fichier)  // si l'ouverture a fonctionné
+    {
 		string ligne;
 		while(getline(fichier, ligne))  // tant qu'il y a des lignes
 		{
 			cout << ligne << endl;  // on l'affiche
 		}
-                fichier.close(); // on referme le fichier
-        }
-        else
-                cerr << "Impossible d'ouvrir le fichier !" << endl;
- 
-        return 0;
+        fichier.close(); // on referme le fichier
+    }
+    else
+    {
+        cerr << "Impossible d'ouvrir le fichier !" << endl;	
+	}
+    return 0;
 }
-
 
 int execution_programme()
 {
@@ -84,17 +85,17 @@ int execution_programme()
 	bool fin_cycle = false; // permet de savoir si le cycle est terminé
 	int NbCycles = 0; // variable pour le comptage de nb ce cycle effectué
 	time_t start_time = 0;
-    	time_t current_time = 0;
+    time_t current_time = 0;
 	std::istringstream isstream;
 	
 	if(fichier)  // si l'ouverture a fonctionné
-        {
-        	fichier.seekg(0, ios::beg); // on se place au debut du texte
+    {
+        fichier.seekg(0, ios::beg); // on se place au debut du texte
 		while(fichier.eof()==false && fin_cycle == false && fin_prog == false)
 		{
-        		getline(fichier, ligne);
-        		isstream.str(ligne);
-        		ligne_octet=fichier.tellg();
+        	getline(fichier, ligne);
+        	isstream.str(ligne);
+        	ligne_octet=fichier.tellg();
 			getline(isstream, mot_clef,' ');
 			
 			if(_(mot_clef)==_("N")) // permet de mémoriser le numero des lignes dans le cas d'un Go To
@@ -128,8 +129,7 @@ int execution_programme()
 					{
 						emplacement_piece_x=valeur[0];
 						emplacement_piece_y=valeur[1];
-						emplacement_piece_z=valeur[2];
-						
+						emplacement_piece_z=valeur[2];	
 					}
 					
 					first_mvtPAP=false;
@@ -137,7 +137,6 @@ int execution_programme()
 					
 					if(abs(emplacement_piece_x-valeur[0])<=abs(tolerance) && abs(emplacement_piece_y-valeur[1])<=abs(tolerance) && abs(emplacement_piece_z-valeur[2])<=abs(tolerance))
 					{
-					
 						while(detection==false) // tant qu'il n'y a pas de pièce detectée on relance la detection
 						{
 							for(int i=0;i<10;i++) // on analyse l'environement pendant quelque cycle
@@ -201,10 +200,10 @@ int execution_programme()
 					start_time = time(NULL);
 					while(current_time-start_time+1<=valeur[0])// attente en seconde
 					{
-					current_time = time(NULL);
-					demande_position(); // permet de garder la connexion active même pendant le temps d'attente
-					cout<<"demande pos"<<endl;
-					waitKey(500); // pause de 0.5s
+						current_time = time(NULL);
+						demande_position(); // permet de garder la connexion active même pendant le temps d'attente
+						cout<<"demande pos"<<endl;
+						waitKey(500); // pause de 0.5s
 					}
 					break;
 					
@@ -228,7 +227,10 @@ int execution_programme()
 					getline(isstream, mot_clef, ' ');
 					valeur[0]=atoi(mot_clef.c_str());
 					NbCycles++;
-					if(NbCycles > valeur[0]){fin_cycle = true;}
+					if(NbCycles > valeur[0])
+					{
+						fin_cycle = true;
+					}
 					printf("\nRetour_debut_cycles\n");
 					fichier.clear();
 					fichier.seekg(0, ios::beg);
@@ -253,7 +255,6 @@ int execution_programme()
 					break;
 				case _("Descente"):
 					printf("\ndescente\n");
-					
 					//descente jusqu'a l'objet
 					break;
 					
@@ -283,7 +284,10 @@ int execution_programme()
 		}	
 		fichier.close();
 	}
-	else{printf("error de lecture du fichier");}
+	else
+	{
+		printf("error de lecture du fichier");
+	}
 	cout<<"fini"<<endl;
 	return 0;
 }
